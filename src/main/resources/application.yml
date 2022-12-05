@@ -1,0 +1,40 @@
+server:
+  port: 9090
+spring:
+  application:
+    name: spring-consul
+  datasource:
+    url: "jdbc:mysql://localhost:3307/spring-training?allowPublicKeyRetrieval=true&autoReconnect=true&useSSL=false"
+    username: user
+    password: user
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    open-in-view: false
+    hibernate:
+      use-new-id-generator-mappings: false
+  liquibase:
+    change-log: classpath:/db/changelog/changelog-master.xml
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      config:
+        enabled: false
+      discovery:
+        instance-id: ${spring.application.name}:${random.value}
+        service-name: ${spring.application.name}
+        health-check-critical-timeout: "1m"
+        health-check-path: /actuator/health
+        health-check-interval: 10s
+
+info:
+  application:
+    name: Spring Consul
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  info:
+    env:
+      enabled: true

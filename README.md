@@ -1,0 +1,104 @@
+# Spring Cloud Consul
+
+Spring Cloud Consul provides Consul integrations for Spring Boot apps through autoconfiguration and binding to the Spring Environment and other Spring programming model idioms. With a few simple annotations you can quickly enable and configure the common patterns inside your application and build large distributed systems with Hashicorp’s Consul. The patterns provided include Service Discovery, Distributed Configuration and Control Bus.
+
+## Features
+
+Spring Cloud Consul features:
+
+- Service Discovery: instances can be registered with the Consul agent and clients can discover the instances using Spring-managed beans
+
+- Supports Ribbon, the client side load-balancer via Spring Cloud Netflix
+
+- Supports Spring Cloud LoadBalancer, a client side load-balancer provided by the Spring Cloud project
+
+- Supports Zuul, a dynamic router and filter via Spring Cloud Netflix
+
+- Distributed Configuration: using the Consul Key/Value store
+
+- Control Bus: Distributed control events using Consul Events
+
+## Setup
+
+### pom.xml
+
+```xml
+<dependencies>
+    <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-starter-consul</artifactId>
+    </dependency>
+</dependencies>
+<dependencyManagement>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-dependencies</artifactId>
+            <version>${spring-cloud.version}</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
+    </dependencies>
+</dependencyManagement>
+```
+
+### application.yml
+
+```yaml
+spring:
+  application:
+    name: spring-consul
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+```
+
+## Start the consul server
+
+Run this command to start all services in the correct order.
+
+```bash
+$ docker-compose up -d
+```
+
+## View the Consul UI
+
+Navigate to [http://localhost:8500/](http://localhost:8500/) on your browser to access the Consul UI.
+
+Click on the "Nodes" option in the top navigation bar to go to the nodes page. There you'll find an overview of the entire datacenter including the health status of each node, IP address, number of registered services, and a leader badge indicating which node is hosting the leading Consul server.
+
+## Access Consul containers
+
+You can interact with your containerized Consul datacenter with the Docker CLI.
+You can execute Consul CLI commands from your local terminal to your Consul containers using the docker exec command.
+
+```shell script
+$ docker exec consul-client consul members
+```
+
+You can also issue commands inside of your container by opening an interactive shell and using the Consul CLI included in the container.
+
+```shell script
+$ docker exec -it consul-client /bin/sh
+```
+
+Once inside the consul-client container you can use the consul members command to verify you have access to the Consul datacenter.
+
+```shell script
+$ consul members
+```
+
+## Run the application
+
+Run this command to start the application. 
+
+```
+mvn spring-boot:run
+```
+
+## Stop the consul server
+
+```bash
+docker-compose down
+```
