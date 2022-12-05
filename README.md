@@ -32,6 +32,10 @@ Consul security features include the Access Control List (ACL) system, TLS encry
         <groupId>org.springframework.cloud</groupId>
         <artifactId>spring-cloud-starter-consul-all</artifactId>
     </dependency>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-actuator</artifactId>
+    </dependency>
 </dependencies>
 <dependencyManagement>
     <dependencies>
@@ -52,10 +56,17 @@ Consul security features include the Access Control List (ACL) system, TLS encry
 spring:
   application:
     name: spring-consul
-  cloud:
-    consul:
-      host: localhost
-      port: 8500
+  consul:
+    host: localhost
+    port: 8500
+    config:
+      enabled: false
+    discovery:
+      instance-id: ${spring.application.name}:${random.value}
+      service-name: ${spring.application.name}
+      health-check-critical-timeout: "1m"
+      health-check-path: /actuator/health
+      health-check-interval: 10s
 ```
 
 ## Start the consul server
