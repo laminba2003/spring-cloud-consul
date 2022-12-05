@@ -18,8 +18,6 @@ spring:
     consul:
       host: localhost
       port: 8500
-      config:
-        enabled: false
       discovery:
         instance-id: ${spring.application.name}:${random.value}
         service-name: ${spring.application.name}
