@@ -18,6 +18,10 @@ Spring Cloud Consul features:
 
 - Control Bus: Distributed control events using Consul Events
 
+A Consul datacenter contains both clients and servers agents. These agents participate in a LAN gossip pool and RPC forwarding that enables the distributed exchange of information throughout your environment. This information distribution provides the foundation for Consul's service discovery and service mesh capabilities.
+
+Consul security features include the Access Control List (ACL) system, TLS encryption, and gossip encryption. These security features protect Consul communication against eavesdropping, tampering, and spoofing. Check the Consul security model for more information.
+
 ## Setup
 
 ### pom.xml
@@ -26,7 +30,7 @@ Spring Cloud Consul features:
 <dependencies>
     <dependency>
         <groupId>org.springframework.cloud</groupId>
-        <artifactId>spring-cloud-starter-consul</artifactId>
+        <artifactId>spring-cloud-starter-consul-all</artifactId>
     </dependency>
 </dependencies>
 <dependencyManagement>
