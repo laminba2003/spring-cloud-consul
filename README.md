@@ -87,19 +87,32 @@ You can also issue commands inside of your container by opening an interactive s
 $ docker exec -it consul-client /bin/sh
 ```
 
-Once inside the consul-client container you can use the consul members command to verify you have access to the Consul datacenter.
+Once inside the consul-client container, you can use the consul members command to verify you have access to the Consul datacenter.
 
 ```shell script
 $ consul members
 ```
 
+You can find the leader either from the UI using the leader badge shown nearby the server node acting as leader ur using the consul operator command.
+
+```shell script
+$ docker exec consul-client consul operator raft list-peers
+```
+
 ## Run the application
 
-Run this command to start the application. 
+Run this command to start two instances of the application. 
 
 ```
-mvn spring-boot:run
+mvn spring-boot:run -Dspring-boot.run.arguments=--server.port=9090
 ```
+
+
+```
+mvn spring-boot:run -Dspring-boot.run.arguments=--server.port=9091
+```
+
+
 
 ## Stop the consul server
 
