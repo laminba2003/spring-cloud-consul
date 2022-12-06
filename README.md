@@ -65,6 +65,7 @@ spring:
       health-check-critical-timeout: "1m"
       health-check-path: /actuator/health
       health-check-interval: 10s
+      prefer-ip-address: true
 ```
 
 ## Start the Consul server
