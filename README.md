@@ -67,7 +67,7 @@ spring:
       health-check-interval: 10s
 ```
 
-## Start the consul server
+## Start the Consul server
 
 Run this command to start all services in the correct order.
 
@@ -116,14 +116,11 @@ Run this command to start two instances of the application.
 mvn spring-boot:run -Dspring-boot.run.arguments=--server.port=9090
 ```
 
-
 ```
 mvn spring-boot:run -Dspring-boot.run.arguments=--server.port=9091
 ```
 
-
-
-## Stop the consul server
+## Stop the Consul server
 
 ```bash
 docker-compose down
