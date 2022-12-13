@@ -68,7 +68,7 @@ spring:
       prefer-ip-address: true
 ```
 
-## 
+## TLS and SSL
 
 You can register your service on Consul to listen for requests on HTTPS by following the usual Spring server configuration. The following example shows how to do so:
 
