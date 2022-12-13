@@ -1,5 +1,6 @@
 server:
   port: 9090
+
 spring:
   application:
     name: spring-consul
@@ -29,6 +30,7 @@ spring:
 info:
   application:
     name: Spring Consul
+
 management:
   endpoints:
     web:

@@ -1,0 +1,14 @@
+server:
+  ssl:
+    enabled: true
+    key-store: classpath:server.jks
+    key-store-password: changeit
+    key-alias: thinktech
+
+
+spring:
+  cloud:
+    consul:
+      discovery:
+       scheme: https
+       health-check-tls-skip-verify: true
