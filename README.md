@@ -12,8 +12,6 @@ Spring Cloud Consul features:
 
 - Supports Spring Cloud LoadBalancer, a client side load-balancer provided by the Spring Cloud project
 
-- Supports Zuul, a dynamic router and filter via Spring Cloud Netflix
-
 - Distributed Configuration: using the Consul Key/Value store
 
 - Control Bus: Distributed control events using Consul Events
