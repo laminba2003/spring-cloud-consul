@@ -68,6 +68,27 @@ spring:
       prefer-ip-address: true
 ```
 
+## 
+
+You can register your service on Consul to listen for requests on HTTPS by following the usual Spring server configuration. The following example shows how to do so:
+
+```yaml
+server:
+  ssl:
+    enabled: true
+    key-store: classpath:server.jks
+    key-store-password: changeit
+    key-store-type: JKS
+    key-alias: thinktech
+
+spring:
+  cloud:
+    consul:
+      discovery:
+       scheme: https
+       health-check-tls-skip-verify: true
+```
+
 ## Start the Consul server
 
 Run this command to start all services in the correct order.
