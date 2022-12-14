@@ -25,6 +25,10 @@ spring:
         health-check-critical-timeout: "1m"
         health-check-path: /actuator/health
         health-check-interval: 10s
+        heartbeat:
+          enabled: true
+          reregister-service-on-failure: true
+          ttl: 30s
 
 info:
   application:
