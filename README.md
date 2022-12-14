@@ -121,7 +121,7 @@ Once inside the consul-client container, you can use the consul members command 
 $ consul members
 ```
 
-You can find the leader either from the UI using the leader badge shown nearby the server node acting as leader ur using the consul operator command.
+You can find the leader either from the UI using the leader badge shown nearby the server node acting as leader using the consul operator command.
 
 ```shell script
 $ docker exec consul-client consul operator raft list-peers
