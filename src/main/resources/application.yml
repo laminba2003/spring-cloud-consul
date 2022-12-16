@@ -38,3 +38,7 @@ management:
   info:
     env:
       enabled: true
+
+logging:
+  level:
+    org.springframework.web: TRACE
