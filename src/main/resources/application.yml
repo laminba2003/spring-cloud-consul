@@ -4,6 +4,8 @@ server:
 spring:
   application:
     name: spring-consul
+  mvc:
+    log-request-details: true
   datasource:
     url: "jdbc:mysql://localhost:3307/spring-training?allowPublicKeyRetrieval=true&autoReconnect=true&useSSL=false"
     username: user
