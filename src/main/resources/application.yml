@@ -27,6 +27,7 @@ spring:
         health-check-critical-timeout: "1m"
         health-check-path: /actuator/health
         health-check-interval: 10s
+        hostname: DESKTOP-GJ9JFOE.mshome.net
 
 info:
   application:
