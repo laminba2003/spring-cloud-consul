@@ -4,6 +4,8 @@ server:
 spring:
   application:
     name: spring-consul
+  zipkin:
+    enabled: false
   mvc:
     log-request-details: true
   datasource:
