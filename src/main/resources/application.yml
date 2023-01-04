@@ -30,17 +30,12 @@ spring:
         health-check-path: /actuator/health
         health-check-interval: 10s
         hostname: DESKTOP-GJ9JFOE.mshome.net
-        catalog-services-watch:
-          enabled: false
 
 info:
   application:
     name: Spring Consul
 
 management:
-  health:
-    consul:
-      enabled: false
   endpoints:
     web:
       exposure:
