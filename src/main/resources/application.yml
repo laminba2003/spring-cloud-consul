@@ -36,6 +36,11 @@ info:
     name: Spring Consul
 
 management:
+  endpoint:
+    health:
+      show-details: always
+    consul:
+      enabled: true
   endpoints:
     web:
       exposure:
