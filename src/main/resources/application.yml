@@ -34,6 +34,7 @@ spring:
 info:
   application:
     name: Spring Consul
+    description: Simple SpringBoot application with Service Discovery
 
 management:
   endpoint:
@@ -48,6 +49,12 @@ management:
   info:
     env:
       enabled: true
+
+springdoc:
+  swagger-ui:
+    path: /swagger
+  api-docs:
+    path: /api-docs
 
 logging:
   level:
