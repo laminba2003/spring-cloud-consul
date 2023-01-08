@@ -1,25 +1,74 @@
 package com.spring.training.config;
 
+import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.security.OAuthFlow;
+import io.swagger.v3.oas.models.security.OAuthFlows;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
+import io.swagger.v3.oas.models.security.SecurityScheme;
+import io.swagger.v3.oas.models.tags.Tag;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.info.BuildProperties;
 import org.springframework.boot.info.GitProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.ConfigurableEnvironment;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Configuration
 public class ApplicationConfig {
 
+    @Autowired(required = false)
+    BuildProperties buildProperties;
+    @Autowired(required = false)
+    GitProperties gitProperties;
+
     @Bean
-    public OpenAPI openAPI(ConfigurableEnvironment environment, BuildProperties buildProperties, GitProperties gitProperties) {
-        String version = "1.0";
-        if (buildProperties != null && gitProperties != null) {
-            version = buildProperties.getVersion() + "-" + gitProperties.getShortCommitId() + "-" + gitProperties.getBranch();
-        }
-        return new OpenAPI()
-                .info(new Info().title(environment.getProperty("info.application.name"))
-                        .description(environment.getProperty("info.application.description"))
-                        .version(version));
+    public OpenAPI openAPI(ConfigurableEnvironment environment) {
+        String version = buildProperties != null ? buildProperties.getVersion() : "1.0";
+        OAuthFlow oAuthFlow = new OAuthFlow();
+        OauthFlowConfig oauthFlowConfig = oauthFlowConfig();
+        oAuthFlow.authorizationUrl(oauthFlowConfig.getAuthorizationUrl());
+        oAuthFlow.setTokenUrl(oauthFlowConfig.getTokenUrl());
+        return new OpenAPI().info(new Info().title(environment.getProperty("info.application.name"))
+                .description(environment.getProperty("info.application.description"))
+                .version(version))
+                .components(new Components().addSecuritySchemes("OAuth",
+                        new SecurityScheme()
+                                .type(SecurityScheme.Type.OAUTH2)
+                                .scheme("bearer")
+                                .bearerFormat("jwt")
+                                .in(SecurityScheme.In.HEADER)
+                                .name("Authorization")
+                                .flows(new OAuthFlows().authorizationCode(oAuthFlow))))
+                .addSecurityItem(new SecurityRequirement().addList("OAuth"))
+                .tags(createTags());
     }
+
+    @Bean
+    @ConfigurationProperties(prefix = "springdoc.oauth")
+    public OauthFlowConfig oauthFlowConfig() {
+        return new OauthFlowConfig();
+    }
+
+    private List<Tag> createTags() {
+        List<Tag> tags = new ArrayList<>();
+        if (gitProperties != null) {
+            tags.add(createTag("commit", gitProperties.getShortCommitId()));
+            tags.add(createTag("branch", gitProperties.getBranch()));
+        }
+        return tags;
+    }
+
+    private Tag createTag(String name, String description) {
+        Tag tag = new Tag();
+        tag.setName(name);
+        tag.setDescription(description);
+        return tag;
+    }
+
 }
