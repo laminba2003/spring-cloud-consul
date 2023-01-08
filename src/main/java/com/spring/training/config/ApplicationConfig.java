@@ -30,10 +30,6 @@ public class ApplicationConfig {
     @Bean
     public OpenAPI openAPI(ConfigurableEnvironment environment) {
         String version = buildProperties != null ? buildProperties.getVersion() : "1.0";
-        OAuthFlow oAuthFlow = new OAuthFlow();
-        OauthFlowConfig oauthFlowConfig = oauthFlowConfig();
-        oAuthFlow.authorizationUrl(oauthFlowConfig.getAuthorizationUrl());
-        oAuthFlow.setTokenUrl(oauthFlowConfig.getTokenUrl());
         return new OpenAPI().info(new Info().title(environment.getProperty("info.application.name"))
                 .description(environment.getProperty("info.application.description"))
                 .version(version))
@@ -44,7 +40,7 @@ public class ApplicationConfig {
                                 .bearerFormat("jwt")
                                 .in(SecurityScheme.In.HEADER)
                                 .name("Authorization")
-                                .flows(new OAuthFlows().authorizationCode(oAuthFlow))))
+                                .flows(new OAuthFlows().authorizationCode(createOAuthFlow()))))
                 .addSecurityItem(new SecurityRequirement().addList("OAuth"))
                 .tags(createTags());
     }
@@ -53,6 +49,14 @@ public class ApplicationConfig {
     @ConfigurationProperties(prefix = "springdoc.oauth")
     public OauthFlowConfig oauthFlowConfig() {
         return new OauthFlowConfig();
+    }
+
+    private OAuthFlow createOAuthFlow() {
+        OAuthFlow oAuthFlow = new OAuthFlow();
+        OauthFlowConfig oauthFlowConfig = oauthFlowConfig();
+        oAuthFlow.authorizationUrl(oauthFlowConfig.getAuthorizationUrl());
+        oAuthFlow.setTokenUrl(oauthFlowConfig.getTokenUrl());
+        return oAuthFlow;
     }
 
     private List<Tag> createTags() {
