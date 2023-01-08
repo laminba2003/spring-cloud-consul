@@ -58,17 +58,10 @@ public class ApplicationConfig {
     private List<Tag> createTags() {
         List<Tag> tags = new ArrayList<>();
         if (gitProperties != null) {
-            tags.add(createTag("commit", gitProperties.getShortCommitId()));
-            tags.add(createTag("branch", gitProperties.getBranch()));
+            tags.add(new Tag().name("commit").description(gitProperties.getShortCommitId()));
+            tags.add(new Tag().name("branch").description(gitProperties.getBranch()));
         }
         return tags;
-    }
-
-    private Tag createTag(String name, String description) {
-        Tag tag = new Tag();
-        tag.setName(name);
-        tag.setDescription(description);
-        return tag;
     }
 
 }
