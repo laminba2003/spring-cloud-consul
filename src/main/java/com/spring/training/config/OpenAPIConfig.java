@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
-public class ApplicationConfig {
+public class OpenAPIConfig {
 
     @Autowired(required = false)
     BuildProperties buildProperties;
@@ -46,7 +46,7 @@ public class ApplicationConfig {
     }
 
     @Bean
-    @ConfigurationProperties(prefix = "springdoc.oauth")
+    @ConfigurationProperties(prefix = "springdoc.swagger-ui.oauth")
     public OauthFlowConfig oauthFlowConfig() {
         return new OauthFlowConfig();
     }

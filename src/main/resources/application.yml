@@ -52,13 +52,11 @@ management:
 
 springdoc:
   swagger-ui:
-    path: /swagger
-  api-docs:
-    path: /api-docs
-  oauth:
-    authorizationUrl: http://localhost:8080/realms/training/protocol/openid-connect/auth
-    tokenUrl: http://localhost:8080/realms/training/protocol/openid-connect/token
-
+    oauth:
+      client-id: spring
+      client-secret: tkkH2u6lTvxh3JFsaveNQuXPWXFkd4yw
+      authorizationUrl: http://localhost:8080/realms/training/protocol/openid-connect/auth
+      tokenUrl: http://localhost:8080/realms/training/protocol/openid-connect/token
 
 logging:
   level:
