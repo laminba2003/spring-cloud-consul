@@ -2,6 +2,10 @@ package com.spring.training.controller;
 
 import com.spring.training.domain.Country;
 import com.spring.training.service.CountryService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -17,28 +21,43 @@ public class CountryController {
     final CountryService countryService;
 
     @GetMapping
+    @Operation(summary = "getCountries", description = "return the list of countries")
+    @ApiResponse(responseCode = "200", description = "countries found successfully")
     public List<Country> getCountries() {
         return countryService.getCountries();
     }
 
     @GetMapping("{name}")
-    public Country getCountry(@PathVariable("name") String name) {
+    @Operation(summary = "getCountry", description = "return a country by its name")
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "country found successfully"),
+            @ApiResponse(responseCode = "404", description = "country not found")})
+    public Country getCountry(@Parameter(description = "country name", required = true) @PathVariable("name") String name) {
         return countryService.getCountry(name);
     }
 
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
+    @Operation(summary = "createCountry", description = "create a country")
+    @ApiResponses({@ApiResponse(responseCode = "201", description = "country created successfully"),
+            @ApiResponse(responseCode = "409", description = "country already created")})
     public Country createCountry(@Valid @RequestBody Country country) {
         return countryService.createCountry(country);
     }
 
     @PutMapping("{name}")
-    public Country updateCountry(@PathVariable("name") String name, @Valid @RequestBody Country country) {
+    @Operation(summary = "updateCountry", description = "update a country by its name")
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "country updated successfully"),
+            @ApiResponse(responseCode = "404", description = "country not found")})
+    public Country updateCountry(@Parameter(description = "country name", required = true) @PathVariable("name") String name,
+                                 @Valid @RequestBody Country country) {
         return countryService.updateCountry(name, country);
     }
 
     @DeleteMapping("{name}")
-    public void deleteCountry(@PathVariable("name") String name) {
+    @Operation(summary = "deleteCountry", description = "delete a country by its name")
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "country deleted successfully"),
+            @ApiResponse(responseCode = "409", description = "cannot delete country")})
+    public void deleteCountry(@Parameter(description = "country name", required = true) @PathVariable("name") String name) {
         countryService.deleteCountry(name);
     }
 
