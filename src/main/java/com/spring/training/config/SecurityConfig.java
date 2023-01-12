@@ -20,10 +20,15 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
         jsr250Enabled = true)
 public class SecurityConfig {
 
+    static final String[] whitelist = {
+            "/actuator/**", "/v3/api-docs/**", "/swagger-ui.html", "/webjars/**", "/swagger-ui/**",
+            "/*/v3/api-docs", "/swagger-config"
+    };
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests(authentication -> authentication
-                .antMatchers("/actuator/**", "/v3/api-docs/**", "/swagger-ui.html", "/webjars/**", "/swagger-ui/**").permitAll()
+                .antMatchers(whitelist).permitAll()
                 .antMatchers("/**").authenticated())
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt().jwtAuthenticationConverter(new JwtConverter()))
                 .cors().and().csrf().disable().sessionManagement()
