@@ -8,13 +8,14 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("persons")
+@RequestMapping(value = "persons", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 @AllArgsConstructor
 public class PersonController {
 
@@ -57,7 +58,7 @@ public class PersonController {
     @Operation(summary = "deletePerson", description = "delete a person by its id")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "person deleted successfully"),
             @ApiResponse(responseCode = "409", description = "cannot delete person")})
-    public void deletePerson(@PathVariable("id") Long id) {
+    public void deletePerson(@Parameter(description = "person id", required = true) @PathVariable("id") Long id) {
         personService.deletePerson(id);
     }
 
