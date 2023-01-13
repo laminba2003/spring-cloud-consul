@@ -1,5 +1,6 @@
 package com.spring.training.controller;
 
+import com.spring.training.annotation.IsAdmin;
 import com.spring.training.domain.Person;
 import com.spring.training.service.PersonService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -40,6 +41,7 @@ public class PersonController {
     @Operation(summary = "createPerson", description = "create a person")
     @ApiResponses({@ApiResponse(responseCode = "201", description = "person created successfully"),
             @ApiResponse(responseCode = "404", description = "country not found")})
+    @IsAdmin
     public Person createPerson(@Valid @RequestBody Person person) {
         return personService.createPerson(person);
     }
@@ -48,6 +50,7 @@ public class PersonController {
     @Operation(summary = "updatePerson", description = "update a person by its id")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "person updated successfully"),
             @ApiResponse(responseCode = "404", description = "person or country not found")})
+    @IsAdmin
     public Person updatePerson(@Parameter(description = "person id", required = true) @PathVariable("id") Long id,
                                @Valid @RequestBody Person person) {
         return personService.updatePerson(id, person);
@@ -57,6 +60,7 @@ public class PersonController {
     @Operation(summary = "deletePerson", description = "delete a person by its id")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "person deleted successfully"),
             @ApiResponse(responseCode = "409", description = "cannot delete person")})
+    @IsAdmin
     public void deletePerson(@Parameter(description = "person id", required = true) @PathVariable("id") Long id) {
         personService.deletePerson(id);
     }
